@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="db.properties">
+		<property name="db_driver" value="com.mysql.jdbc.Driver" />
+		<property name="db_encoding" value="UTF8" />
+	</properties>
+	<typeAliases>
+		<!-- Frame信息 -->
+		<typeAlias alias="FrameTextSample" type="info.hb.video.sample.core.domain.FrameTextSample"/>
+	</typeAliases>
+	<environments default="video">
+		<environment id="video">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="url" value="${video.db.url}" />
+				<property name="username" value="${video.db.username}" />
+				<property name="password" value="${video.db.password}" />
+				<property name="driver" value="${db_driver}" />
+				<property name="driver.encoding" value="${db_encoding}" />
+				<property name="poolPingEnabled" value="true" />
+				<property name="poolPingQuery" value="select 1" />
+				<property name="poolPingConnectionsNotUsedFor" value="5000" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<package name="info.hb.video.sample.core.dao" />
+	</mappers>
+</configuration>
+	
