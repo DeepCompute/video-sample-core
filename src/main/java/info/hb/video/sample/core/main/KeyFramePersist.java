@@ -39,25 +39,25 @@ public class KeyFramePersist {
 
 	private static final AtomicInteger COUNT = new AtomicInteger(0);
 
-	// 帧率30
-	private int frameRate = 30;
+	// 帧率，这里处理的视频帧率不同，25、30都有
+	private int frameRate = 25;
 
 	private HBRiakClient cluster;
 
 	// 持久化到MySQL中
 	private FrameSample frameSample;
 
-	public KeyFramePersist(int rate) {
+	public KeyFramePersist(int frameRate) {
 		frameSample = new FrameSample(MybatisConfig.ServerEnum.video);
 		cluster = new HBRiakClusterImpl();
-		this.frameRate = rate;
+		this.frameRate = frameRate;
 	}
 
 	/**
 	 * 主函数
 	 */
 	public static void main(String[] args) {
-		KeyFramePersist kfp = new KeyFramePersist(100);
+		KeyFramePersist kfp = new KeyFramePersist(50);
 		kfp.run(new File("/home/wanggang/develop/deeplearning/xc-video-20150828"));
 		kfp.close();
 	}
@@ -91,6 +91,7 @@ public class KeyFramePersist {
 		try (Video<MBFImage> frames = new XuggleVideo(new File(videoFile));) {
 			logger.info("Count:{}, Video:'{}' has {} frames, frame rate is {}.", COUNT.addAndGet(1), vname,
 					frames.countFrames(), frames.getFPS());
+			//			frameRate = (int) frames.getFPS();
 			// 帧索引
 			int index = 1;
 			FrameTextSample frameTextSample = null;
@@ -114,6 +115,8 @@ public class KeyFramePersist {
 						.setVideo_id(videoName.getVideo_id()).setVideo_name(vname).build();
 				// 添加到列表中
 				result.add(frameTextSample);
+				// 输出测试
+				System.err.println(index + ": " + id);
 				index++;
 			}
 		}
