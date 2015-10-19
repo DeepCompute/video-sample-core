@@ -71,7 +71,11 @@ public class KeyFramePersist {
 				// 存储视频到Riak中，然后需要存储到MySQL中的信息列表
 				List<FrameTextSample> frameTextSamples = video2KeyFrames(file);
 				// 存储到MySQL中
-				frameSample.insertFrameSamples(frameTextSamples);
+				try {
+					frameSample.insertFrameSamples(frameTextSamples);
+				} catch (Exception e) {
+					//
+				}
 			}
 		}
 	}
