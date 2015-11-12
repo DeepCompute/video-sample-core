@@ -33,8 +33,6 @@ public class KeyFramePersist {
 	private static final String BUCKET_TYPE = "default";
 
 	// Nginx代理服务器
-	// 外网：36.7.150.150:9998
-	// 内网：192.168.31.11:1888
 	private static final String NGINX_PROXY = "192.168.31.11:1888";
 
 	private static final AtomicInteger COUNT = new AtomicInteger(0);
